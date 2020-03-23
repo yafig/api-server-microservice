@@ -10,7 +10,7 @@ import binascii
 def create_app(config_name="PRODUCTION"):
     app = Flask(__name__)
     if config_name == "PRODUCTION":
-        app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:password@172.17.0.2/yafig"
+        app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:password@mysql/yafig"
 
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.init_app(app)

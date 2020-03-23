@@ -1,0 +1,13 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+metadata:
+  name: user
+build:
+  local:
+    push: false
+  artifacts:
+  - image: yafig-user-python
+deploy:
+  kubectl:
+    manifests:
+    - skaffold/user.yaml

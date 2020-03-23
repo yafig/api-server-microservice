@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yafig-user-python
+  labels:
+    app: yafig-user-python
+spec:
+  selector:
+    matchLabels:
+      app: yafig-user-python
+      tier: api-server
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: yafig-user-python
+        tier: api-server
+    spec:
+      containers:
+      - image: yafig-user-python
+        name: yafig-user-python
+        command: ["flask", "run"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: yafig-service
+  labels:
+    app: yafig
+spec:
+  ports:
+    - port: 3306
+  selector:
+    app: yafig
+    tier: api-server
+  clusterIP: None
