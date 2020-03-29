@@ -17,8 +17,8 @@ app.debug = True
 SECRET_KEY = "random string"
 
 @inject
-@app.route('/users/<user_id>', methods=["GET"])
+@app.route('/users/<string:user_id>', methods=["GET"])
 def get_user(user_id, service: UserServiceInterface):
-    return service.get_user("test")
+    return service.get_user(user_id)
 
 FlaskInjector(app=app, modules=[configure])
