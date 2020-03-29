@@ -4,7 +4,7 @@ from .user_model import User
 
 class DatabaseInterface(ABC):
     @abstractmethod
-    def get_user(self, username: str) -> User:
+    def find_user(self, email: str, username: str) -> User:
         pass
 
     @abstractmethod

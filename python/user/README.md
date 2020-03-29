@@ -20,6 +20,6 @@ This service is developed in Hexagonal / Port & Adapter architecture. The main r
 
 - **Alembic automigration**
 
-  Use Alembic package with SQLAlchemy to generate & run migration.
+  Use Alembic package with SQLAlchemy to generate, define and run migrations atomically
 
 Overall, the Python 3.8 writing experience is totally different from Python 2.7 writing style. Personally, it feels like writing Go now but with no compilation issues (but runtime issue).

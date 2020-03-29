@@ -21,12 +21,30 @@ class MySQLAdapter(DatabaseInterface):
         engine = sqlalchemy.create_engine(database_uri)
         self.__connection = engine.connect()
 
-    def get_user(self, username: str) -> User:
-        query = users.select().where(users.c.username == username)
+    def find_user(self, email: Optional[str] = None, username: Optional[str] = None) -> User:
+        if email and username:
+            query = users.select().where(users.c.username == username and users.c.email == email)
+        elif email and not username:
+            query = users.select().where(users.c.email == email)
+        elif username and not email:
+            query = users.select().where(users.c.username == username)
+        else:
+            raise Exception("Invalid find query")
+
         cursor = self.__connection.execute(query)
         row = cursor.fetchone()
-        print(row)
-        return User(**row)
+        if row:
+            return User(**row)
+        else:
+            return None
 
-    def add_user(self, username: str):
-        pass
+    def add_user(self, user: User) -> User:
+        query = users.insert().values(
+                                        username=user.username,
+                                        email=user.email,
+                                        password=user.password,
+                                        password_salt=user.password_salt,
+                                        status=user.status
+                                    )
+        self.__connection.execute(query)
+        return self.find_user(username=user.username)
