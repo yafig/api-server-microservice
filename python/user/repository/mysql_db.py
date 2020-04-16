@@ -32,19 +32,25 @@ class MySQLAdapter(DatabaseInterface):
             raise Exception("Invalid find query")
 
         cursor = self.__connection.execute(query)
-        row = cursor.fetchone()
-        if row:
+        if row := cursor.fetchone():
             return User(**row)
         else:
             return None
 
-    def add_user(self, user: User) -> User:
-        query = users.insert().values(
-                                        username=user.username,
-                                        email=user.email,
-                                        password=user.password,
-                                        password_salt=user.password_salt,
-                                        status=user.status
+    def add_user(self, user: User) -> bool:
+        query = users.insert().values(username=user.username,
+                                    email=user.email,
+                                    password=user.password,
+                                    password_salt=user.password_salt,
+                                    status=user.status
                                     )
         self.__connection.execute(query)
-        return self.find_user(username=user.username)
+        return True
+
+    def delete_user(self, username: str) -> bool:
+        stmt = users.delete().where(users.c.username == username)
+        self.__connection.execute(stmt)
+        return True
+
+    def edit_user(self, user: User) -> User:
+        pass
