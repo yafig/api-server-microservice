@@ -2,7 +2,7 @@ sqlalchemy_utils
 cffi==1.14.0
 Click==7.0
 cryptography==2.8
-Flask==1.1.1
+Flask==2.3.2
 Flask-Cors==3.0.8
 Flask-SQLAlchemy==2.4.1
 itsdangerous==1.1.0
